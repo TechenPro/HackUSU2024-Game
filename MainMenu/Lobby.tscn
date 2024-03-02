@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://b00tb76sq14vq"]
+[gd_scene load_steps=3 format=3 uid="uid://b00tb76sq14vq"]
 
 [ext_resource type="Script" path="res://MainMenu/LobbyControl.gd" id="1_xaw8s"]
+[ext_resource type="Script" path="res://Network/Scripts/Networking.gd" id="2_t3d6j"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D2" type="Node2D"]
 
 [node name="LobbyControl" type="Control" parent="."]
 layout_mode = 3
@@ -62,7 +63,7 @@ offset_bottom = 36.0
 theme_override_font_sizes/font_size = 20
 text = "Connected"
 
-[node name="PlayerOneReady" type="Label" parent="LobbyControl/LobbyBoard/PlayerTwoStatus"]
+[node name="PlayerTwoReady" type="Label" parent="LobbyControl/LobbyBoard/PlayerTwoStatus"]
 layout_mode = 0
 offset_left = 576.0
 offset_top = 8.0
@@ -85,3 +86,6 @@ offset_top = 384.0
 offset_right = 384.0
 offset_bottom = 448.0
 text = "Back"
+
+[node name="NetworkControl" type="Node" parent="."]
+script = ExtResource("2_t3d6j")
