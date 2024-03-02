@@ -1,5 +1,5 @@
 extends TextureButton
-
+var unit
 func _ready():
 	
 	var button = Button.new()
@@ -15,4 +15,15 @@ func _ready():
 	
 
 func _button_pressed():
-	print("Hello world!")
+	print(unit["active"])
+
+
+func _on_temp_wait(dict):
+	unit = {"id": dict["id"],
+	"loc": dict["loc"],
+	"mov_range": dict["mov_range"],
+	"player_id": dict["player_id"],
+	"health": dict["health"],
+	"active": dict["active"],
+	"cooldown_queue_position": dict["cooldown_queue_position"],
+	"obj_type": dict["obj_type"]}

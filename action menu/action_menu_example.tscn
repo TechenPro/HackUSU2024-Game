@@ -1,0 +1,97 @@
+[gd_scene load_steps=13 format=3 uid="uid://bxyift64jxvne"]
+
+[ext_resource type="Script" path="res://action menu/Scripts/action.gd" id="1_fq0t0"]
+[ext_resource type="PackedScene" uid="uid://1a6ga7ux430j" path="res://action menu/node_2d.tscn" id="2_ofs5q"]
+[ext_resource type="Script" path="res://action menu/Scripts/Fight.gd" id="3_xh0il"]
+[ext_resource type="Script" path="res://action menu/Scripts/Build.gd" id="4_fp56c"]
+[ext_resource type="Script" path="res://action menu/Scripts/Wait.gd" id="5_35a0g"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ym4hl"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_ou2t2"]
+sky_material = SubResource("ProceduralSkyMaterial_ym4hl")
+
+[sub_resource type="Environment" id="Environment_kasd2"]
+background_mode = 2
+sky = SubResource("Sky_ou2t2")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_g7wx2"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wbwax"]
+
+[sub_resource type="FontFile" id="FontFile_dot66"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+
+[sub_resource type="Theme" id="Theme_flpxu"]
+/fonts/battle = SubResource("FontFile_dot66")
+
+[node name="Temp" type="Node3D"]
+script = ExtResource("1_fq0t0")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kasd2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.49251)
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+mesh = SubResource("SphereMesh_g7wx2")
+
+[node name="Area3D" type="Area3D" parent="Node3D/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/MeshInstance3D/Area3D"]
+shape = SubResource("SphereShape3D_wbwax")
+
+[node name="Node2D" parent="Node3D" instance=ExtResource("2_ofs5q")]
+
+[node name="Fight2" type="TextureButton" parent="Node3D/Node2D"]
+offset_left = 270.0
+offset_top = -320.0
+offset_right = 610.0
+offset_bottom = -160.0
+scale = Vector2(2.06431, 1.35637)
+theme = SubResource("Theme_flpxu")
+script = ExtResource("3_xh0il")
+metadata/_edit_use_anchors_ = true
+
+[node name="Build2" type="TextureButton" parent="Node3D/Node2D"]
+offset_left = 270.0
+offset_top = 512.0
+offset_right = 610.0
+offset_bottom = 672.0
+scale = Vector2(2.06431, 1.35637)
+theme = SubResource("Theme_flpxu")
+script = ExtResource("4_fp56c")
+metadata/_edit_use_anchors_ = true
+
+[node name="Wait2" type="TextureButton" parent="Node3D/Node2D"]
+offset_left = 270.0
+offset_top = 1400.0
+offset_right = 610.0
+offset_bottom = 1560.0
+scale = Vector2(2.06431, 1.35637)
+theme = SubResource("Theme_flpxu")
+script = ExtResource("5_35a0g")
+metadata/_edit_use_anchors_ = true
+
+[connection signal="build" from="." to="Node3D/Node2D/Build2" method="_on_temp_build"]
+[connection signal="fight" from="." to="Node3D/Node2D/Fight2" method="_on_temp_fight"]
+[connection signal="wait" from="." to="Node3D/Node2D/Wait2" method="_on_temp_wait"]
