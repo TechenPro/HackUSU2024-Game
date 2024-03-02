@@ -6,10 +6,22 @@ const MARBLE_TEX = preload("res://Assets/Marble.tres")
 
 var server: ServerWorld
 var client: PlayerWorld
+var camera: Camera3D
+var VWIDTH
+var VHEIGHT
+var pan_speed=20
+var pan_h_max = 0
+var pan_v_max = 0
+var pan_h_min = 0
+var pan_v_min = 0
 
-var world_map
-
-func _ready():	
+func _ready():
+	camera = get_child(0)
+	on_resize()
+	get_tree().get_root().size_changed.connect(on_resize)
+	client = PlayerWorld.new()
+	add_child(client)
+		
 	if multiplayer.is_server():
 		server = ServerWorld.new()
 		add_child(server)
