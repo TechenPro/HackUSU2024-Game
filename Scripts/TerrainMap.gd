@@ -28,8 +28,46 @@ func get_coord_list():
 		result.append([k >> 8, k & 0xFF])
 	return result
 	
+func bfs(start, end):
+	var visited = {}
+	var queue = []
+	queue.append([start, [start]])
+	while queue:
+		var item = queue.popleft()
+		var node = item[0]
+		var path = item[1]
+		
+		if node == end:
+			return path
+			
+		visited.set(node, true)
+		
+		for n in self.data[node]:
+			if not visited.has(n):
+				queue.append([n, path.append(n)])
+				
+
+func bfs_max_depth(start: int, max_depth: int, occupied: Dictionary={}):
+	var queue = [[start, 0]]
+	var visited = {}
+	var reachable = []
+	
+	while queue:
+		var node = queue.popeft()
+		if node[1] <= max_depth:
+			reachable.append(node[0])
+			
+			for n in self.data[node[0]]:
+				if not visited.has(n) and not occupied.has(n):
+					queue.append([n, node[1]+1])
+					visited.set(n, true)
+	
+	return reachable
+	
+	
 static func key_to_coord(k):
 	return [k >> 8, k & 0xFF]
+
 
 static func coord_to_key(q, r):
 	return (q << 8) | r
