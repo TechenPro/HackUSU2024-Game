@@ -5,6 +5,7 @@ const HEX_FILE = preload("res://Assets/HexPillar.obj")
 const MARBLE_TEX = preload("res://Assets/Marble.tres")
 
 var server: ServerWorld
+var client: PlayerWorld
 var camera: Camera3D
 var VWIDTH
 var VHEIGHT
@@ -15,17 +16,9 @@ var pan_h_min = 0
 var pan_v_min = 0
 
 func _ready():
-	server = ServerWorld.new()
 	camera = get_child(0)
 	on_resize()
-	get_tree().get_root().size_changed.connect(on_resize) 
-
-	add_child(server)
-var client: PlayerWorld
-
-var world_map
-
-func _ready():
+	get_tree().get_root().size_changed.connect(on_resize)
 	client = PlayerWorld.new()
 	add_child(client)
 		
