@@ -16,34 +16,34 @@ cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
 /fonts/battle = SubResource("FontFile_l8uvm")
 
 [node name="Node2D" type="Node2D"]
-position = Vector2(347, 126)
-scale = Vector2(0.25, 0.25)
+position = Vector2(19, 44)
+scale = Vector2(0.1, 0.1)
 
 [node name="Fight" type="TextureButton" parent="."]
-offset_left = 272.0
-offset_top = -316.0
-offset_right = 615.0
-offset_bottom = -155.0
+offset_left = 270.0
+offset_top = -320.0
+offset_right = 610.0
+offset_bottom = -160.0
 scale = Vector2(2.06431, 1.35637)
 theme = SubResource("Theme_5jqq3")
 script = ExtResource("1_x4nin")
 metadata/_edit_use_anchors_ = true
 
 [node name="Build" type="TextureButton" parent="."]
-offset_left = 292.0
+offset_left = 270.0
 offset_top = 512.0
-offset_right = 635.0
-offset_bottom = 673.0
+offset_right = 610.0
+offset_bottom = 672.0
 scale = Vector2(2.06431, 1.35637)
 theme = SubResource("Theme_5jqq3")
 script = ExtResource("2_b8bkl")
 metadata/_edit_use_anchors_ = true
 
 [node name="Wait" type="TextureButton" parent="."]
-offset_left = 316.0
-offset_top = 1392.0
-offset_right = 659.0
-offset_bottom = 1553.0
+offset_left = 270.0
+offset_top = 1400.0
+offset_right = 610.0
+offset_bottom = 1560.0
 scale = Vector2(2.06431, 1.35637)
 theme = SubResource("Theme_5jqq3")
 script = ExtResource("3_3twfr")
