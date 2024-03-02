@@ -14,6 +14,11 @@ func _init(uid):
 	unit_set = {}
 	base_set = {}
 	
+@rpc("authority", "call_local")
+func world_updated(world_state):
+	#update world
+	pass
+	
 func can_build():
 	return resource_count >= 5
 
