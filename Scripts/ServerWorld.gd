@@ -20,9 +20,11 @@ func _init():
 	# Load world map
 	world_map = TerrainMap.new()
 	world_map.load_map(map_coord_set)
+	
 
 	# Load players
-	for p in multiplayer.get_peers():
+	# for p in multiplayer.get_peers():
+	for p in [1,2]:
 		player_list[p] = Player.new(p)
 		load_initial_player_location(p, valid_start_locations.pop_back())
 
