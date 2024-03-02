@@ -1,17 +1,17 @@
-class_name Player extends Node3D
+class_name Player
 
-@export
 var id: int
 var visibility_map: Dictionary
-var unit_list: Dictionary
-var base_list: Dictionary
+var unit_set: Dictionary
+var base_set: Dictionary
+var main_base_id: int
 
 
 func _init(uid):
 	self.id = uid
 	visibility_map = {}
-	unit_list = {}
-	base_list = {}
+	unit_set = {}
+	base_set = {}
 	
 
 
