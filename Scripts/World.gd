@@ -7,6 +7,7 @@ var ActionQ:Array
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	var Network = $Network
 	Network.create_game()
 	pass # Replace with function body.

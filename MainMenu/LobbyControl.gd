@@ -62,6 +62,7 @@ func player_ready(peer_id):
 
 @rpc("authority", "reliable")
 func set_player_ready_status(player_id, status):
+	print("set_player_ready ", player_id, " ", status)
 	var readyText = ""
 	if (status):
 		readyText = "Ready"
