@@ -5,10 +5,21 @@ const HEX_FILE = preload("res://Assets/HexPillar.obj")
 const MARBLE_TEX = preload("res://Assets/Marble.tres")
 
 var server: ServerWorld
+var client: PlayerWorld
+
+var world_map
 
 func _ready():
-	server = ServerWorld.new()
-	add_child(server)
+	client = PlayerWorld.new()
+	add_child(client)
+		
+	if multiplayer.is_server():
+		server = ServerWorld.new()
+		add_child(server)
+		load_map.rpc(server.world_map)
+
+@rpc("any_peer", "call_local", "reliable")
+func load_map():
 	print(server.world_map.get_coord_list())
 	for coord in server.world_map.get_coord_list():
 		# print(coord)
@@ -23,5 +34,4 @@ func _ready():
 		tile.rotate(Vector3(1,0,0), deg_to_rad(90))
 		tile.rotate(Vector3(0,1,0), deg_to_rad(30))
 		tile.material_override = MARBLE_TEX
-
 	
