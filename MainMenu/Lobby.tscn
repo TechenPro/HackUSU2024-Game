@@ -15,14 +15,14 @@ script = ExtResource("1_xaw8s")
 layout_mode = 0
 offset_left = 64.0
 offset_top = 64.0
-offset_right = 1024.0
+offset_right = 1088.0
 offset_bottom = 548.0
 
 [node name="PlayerOneStatus" type="Label" parent="LobbyControl/LobbyBoard"]
 layout_mode = 0
-offset_left = 128.0
+offset_left = 184.0
 offset_top = 88.0
-offset_right = 848.0
+offset_right = 904.0
 offset_bottom = 130.0
 theme_override_font_sizes/font_size = 30
 text = "Player One"
@@ -44,11 +44,37 @@ offset_right = 694.0
 offset_bottom = 36.0
 theme_override_font_sizes/font_size = 20
 
+[node name="PlayerTwoStatus" type="Label" parent="LobbyControl/LobbyBoard"]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 150.0
+offset_right = 904.0
+offset_bottom = 192.0
+theme_override_font_sizes/font_size = 30
+text = "Player Two"
+
+[node name="PlayerTwoConnected" type="Label" parent="LobbyControl/LobbyBoard/PlayerTwoStatus"]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 8.0
+offset_right = 394.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 20
+text = "Connected"
+
+[node name="PlayerOneReady" type="Label" parent="LobbyControl/LobbyBoard/PlayerTwoStatus"]
+layout_mode = 0
+offset_left = 576.0
+offset_top = 8.0
+offset_right = 694.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 20
+
 [node name="ReadyButton" type="Button" parent="LobbyControl"]
 layout_mode = 0
-offset_left = 704.0
+offset_left = 768.0
 offset_top = 384.0
-offset_right = 896.0
+offset_right = 960.0
 offset_bottom = 448.0
 text = "Ready"
 
