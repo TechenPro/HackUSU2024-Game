@@ -32,7 +32,7 @@ func _Address_Submitted(str):
 	var NetworkManager = get_parent().get_node("NetworkManager")
 	NetworkManager.join_game(address)
 	
-	if (address == "100"):
+	if (str == "100"):
 		get_tree().change_scene_to_file("res://MainMenu/Lobby.tscn")
 		
 func verify_address(str):

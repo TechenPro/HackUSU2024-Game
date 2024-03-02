@@ -5,7 +5,6 @@ func _ready():
 	var button = Button.new()
 	button.add_theme_color_override("TextureButton", Color(1, 1, 1, 1))
 	button.text = "Wait"
-	button.set_text_alignment(1)
 	button.pressed.connect(self._button_pressed)
 	add_child(button)
 	button.add_theme_color_override("font_hover_color", Color(1, 0.5, 0))

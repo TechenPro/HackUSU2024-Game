@@ -51,6 +51,7 @@ func load_game(game_scene_path):
 # peers call this when they have loaded the game scene
 @rpc("any_peer", "call_local", "reliable")
 func player_loaded():
+	print("Players loaded: ", players_loaded)
 	if multiplayer.is_server():
 		players_loaded += 1
 		if players_loaded == players.size():
@@ -60,32 +61,38 @@ func player_loaded():
 			
 func _on_player_connected(id):
 	_register_player.rpc_id(id)
-	print("Player %d connected", id)
+	print("Player connected: ", id)
+	#for player in players:
+	#	print(player)
 	
 @rpc("any_peer", "reliable")
 func _register_player():
 	var new_player_id = multiplayer.get_remote_sender_id()
 	players[new_player_id] = new_player_id
 	player_connected.emit(new_player_id)
-	print("registered player: %d", new_player_id)
+	
+	print("registered player: ", new_player_id)
+		
 	
 func _on_player_disconnected(id):
 	players.erase(id)
 	player_disconnected.emit(id)
-	print("Player %d disconnected", id)
+	print("Player disconnected: ", id)
 	
 func _on_connected_ok():
 	var peer_id = multiplayer.get_unique_id()
 	players[peer_id] = peer_id
 	player_connected.emit(peer_id)
-	print("I connected ok, my id is: %d", peer_id)
+	print("I connected ok, my id is: ", peer_id)
+	get_tree().change_scene_to_file("res://MainMenu/Lobby.tscn")
 	
 func _on_connected_fail():
-	print("A Player failed to connect")
+	print("You failed to connect")
 	multiplayer.multiplayer_peer = null
 	
 func _on_server_disconnected():
 	print("Server disconnected")
 	multiplayer.multiplayer_peer = null
 	players.clear()
+	get_tree().change_scene_to_file("res://MainMenu/MainMenu.tscn")
 	server_disconnected.emit()
