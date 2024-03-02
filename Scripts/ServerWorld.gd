@@ -2,7 +2,7 @@ class_name ServerWorld extends Node3D
 
 # Exposed fields to import resources into
 @export
-var map_coord_set: Array = [[0,0],[0,1],[0,-1],[1,0],[-1,0], [4, 3], [4, 4]]
+var map_coord_set: Array = [[0,0],[0,1],[0,-1],[1,0],[-1,0], [4, 3], [4, 4], [1,2], [0,-3]]
 @export
 var valid_start_locations: Array = [[[0,0], [0,1]], [[4,3], [4,4]]]
 
