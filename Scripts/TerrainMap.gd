@@ -10,14 +10,15 @@ func load_map(coord_list):
 		add_coordinate(c[0], c[1])
 
 func add_coordinate(q, r):
-	var key = (q << 16)|r
+	var key = TerrainMap.coord_to_key(q,r)
+	
 	var neighbors = get_neighbors(q, r)
 	
 	if not data.has(key):
 		data[key] = []
 	
 	for n in neighbors:
-		var n_key = (n[0] << 16)|n[1]
+		var n_key = TerrainMap.coord_to_key(n[0], n[1])
 		if data.has(n_key):
 			data[key].append(n_key)
 			data[n_key].append(key)
@@ -28,7 +29,7 @@ func get_neighbors(q, r):
 func get_coord_list():
 	var result = []
 	for k in data.keys():
-		result.append([k >> 16, k&0xFF])
+		result.append(TerrainMap.key_to_coord(k))
 	return result
 
 # Returns a path from the given start to the end if possible 
@@ -69,7 +70,8 @@ func get_reachable_locations(start, max_range, occupied={}):
 	return reachable
 
 static func key_to_coord(k):
-	return [k >> 16, k&0xFF]
+	var pieces = k.split(",")
+	return [int(pieces[0]), int(pieces[1])]
 
 static func coord_to_key(q, r):
-	return (q << 16)|r
+	return str(q)+","+str(r)

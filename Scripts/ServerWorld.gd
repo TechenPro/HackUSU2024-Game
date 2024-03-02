@@ -2,7 +2,7 @@ class_name ServerWorld extends Node3D
 
 # Exposed fields to import resources into
 @export
-var map_coord_set: Array = [[0,0],[0,1],[0,-1],[1,0],[-1,0], [4, 3], [4, 4], [1,2], [0,-3]]
+var map_coord_set: Array = [[0,0],[0,1],[0,-1],[1,0],[-1,0], [4, 3], [4, 4], [1,2], [0,-3], [0,-2]]
 @export
 var valid_start_locations: Array = [[[0,0], [0,1]], [[4,3], [4,4]]]
 
@@ -30,6 +30,12 @@ func _init():
 
 	# Setup Variable Mines
 	
+# Players call this function to add their action to the queue
+# commit_action.rpc_id(1, action) 
+@rpc("any_peer", "call_local")
+func commit_action(action: Action):
+	action_queue.push_back(action)
+
 func _process(_delta):
 	if action_queue:
 		process_action(action_queue.pop_front())
@@ -52,8 +58,12 @@ func process_action(action: Action):
 	if not result["success"]:
 		return
 	pass
+	
 	# Emit world state delta to clients
+	#world_update.rpc(world_state)
+	
 
+@rpc("authority", "call_local", "reliable")
 func load_initial_player_location(pid, loc_set):
 	var base_loc = TerrainMap.coord_to_key(loc_set[0][0], loc_set[0][1])
 	var unit_loc = TerrainMap.coord_to_key(loc_set[1][0], loc_set[1][1])

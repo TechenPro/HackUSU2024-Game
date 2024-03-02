@@ -1,9 +1,9 @@
 class_name Action
 
 var action_type: ServerEnums.ActionType
-var final_pos: int
-var target_pos: int
-var actor_id: int
+var final_pos: String
+var target_pos: String
+var actor_id: String
 
 func _init(aid, a_type, f_pos=null, t_pos=null):
 	actor_id=aid

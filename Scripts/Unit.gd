@@ -3,7 +3,7 @@ class_name Unit extends Node3D
 @export
 var id: int
 @export
-var loc: int
+var loc: String
 @export
 var mov_range: int
 @export
@@ -16,7 +16,7 @@ var active: bool
 var cooldown_queue_position: int
 var obj_type: ServerEnums.ObjectType = ServerEnums.ObjectType.UNIT
 
-func _init(uid: int, pid: int, location: int):
+func _init(uid: int, pid: int, location: String):
 	self.id = uid
 	self.player_id = pid
 	self.loc = location
