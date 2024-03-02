@@ -9,27 +9,37 @@ var client: PlayerWorld
 
 var world_map
 
-func _ready():
-	client = PlayerWorld.new()
-	add_child(client)
-		
+func _ready():	
 	if multiplayer.is_server():
 		server = ServerWorld.new()
 		add_child(server)
+		server.World_Updated.connect(world_updated)
 		
-	load_map.rpc(server.world_map)
-
-@rpc("any_peer", "call_local", "reliable")
-func load_map():
-	print(server.world_map.get_coord_list())
-	for coord in server.world_map.get_coord_list():
-		var x = TILE_SIZE * (sqrt(3)*coord[0] + sqrt(3)/2*coord[1])
-		var y = TILE_SIZE * (1.5 * coord[1])
-		var tile = MeshInstance3D.new()
-		tile.mesh = HEX_FILE
-		add_child(tile)
-		tile.translate(Vector3(x, 0, y))
-		tile.rotate(Vector3(1,0,0), deg_to_rad(90))
-		tile.rotate(Vector3(0,1,0), deg_to_rad(30))
-		tile.material_override = MARBLE_TEX
+	client = PlayerWorld.new()
+	add_child(client)
 	
+	print(multiplayer.get_unique_id(), " requesting world state")
+	get_world_state.rpc_id(1)
+	
+	
+func on_world_state_requested():
+	get_world_state.rpc()
+	
+	
+@rpc("any_peer", "call_remote", "reliable")
+func get_world_state():
+	print("World state request received from: ", multiplayer.get_remote_sender_id())
+	if multiplayer.is_server():
+		var new_state = server.get_world_state()
+		print(multiplayer.get_unique_id(), " Sending ", new_state, " to all")
+		world_updated.rpc(new_state)
+
+
+@rpc("authority", "call_remote", "reliable")
+func world_updated(ws:WorldState):
+	print(multiplayer.get_unique_id(), " recieved world update: ", ws)
+	if not client.world_map:
+		client.init_world(ws)
+	else:
+		client.world_updated(ws)
+		

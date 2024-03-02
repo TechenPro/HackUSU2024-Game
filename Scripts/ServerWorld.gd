@@ -6,6 +6,10 @@ var map_coord_set: Array = [[0,0],[0,1],[0,-1],[1,0],[-1,0], [4, 3], [4, 4], [1,
 @export
 var valid_start_locations: Array = [[[0,0], [0,1]], [[4,3], [4,4]]]
 
+signal World_Updated(world_state:WorldState)
+signal simp_World_Updated(world_state:WorldState)
+const simpleworldstate:String = "I like trains"
+
 # Generates uids for all objects
 static var id_counter = 0
 
@@ -60,7 +64,15 @@ func process_action(action: Action):
 	pass
 	
 	# Emit world state delta to clients
-	#world_update.rpc(world_state)
+	World_Updated.emit(WorldState.new(world_map,
+	object_location_map,
+	world_objects))
+	
+func get_world_state():
+	print(multiplayer.get_unique_id(), " getting world state")
+	var ws:WorldState = WorldState.new(world_map, object_location_map, world_objects)
+	print("State: ", ws)
+	return ws
 	
 
 @rpc("authority", "call_local", "reliable")
@@ -178,3 +190,4 @@ func deal_damage(target):
 static func next_id():
 	ServerWorld.id_counter += 1
 	return ServerWorld.id_counter
+	
