@@ -2,7 +2,7 @@ class_name ServerWorld extends Node3D
 
 # Exposed fields to import resources into
 @export
-var map_coord_set: Array = [[0,0],[0,1],[0,-1],[1,0],[-1,0], [4, 3], [4, 4]]
+var map_coord_set: Array = [[0,0],[0,1],[0,-1],[1,0],[-1,0], [4, 3], [4, 4], [1,2], [0,-3]]
 @export
 var valid_start_locations: Array = [[[0,0], [0,1]], [[4,3], [4,4]]]
 
@@ -20,9 +20,11 @@ func _init():
 	# Load world map
 	world_map = TerrainMap.new()
 	world_map.load_map(map_coord_set)
+	
 
 	# Load players
-	for p in multiplayer.get_peers():
+	# for p in multiplayer.get_peers():
+	for p in [1,2]:
 		player_list[p] = Player.new(p)
 		load_initial_player_location(p, valid_start_locations.pop_back())
 

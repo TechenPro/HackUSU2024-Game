@@ -20,7 +20,6 @@ func _init(uid: int, pid: int, location: int, is_main=false):
 	self.id = uid
 	self.player_id = pid
 	self.loc = location
-	self.mov_range = 0
 	self.health = 5
 	self.active = true
 	self.cooldown_queue_position = -1

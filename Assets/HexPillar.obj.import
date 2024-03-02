@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cu57b24u6d84w"
+path="res://.godot/imported/HexPillar.obj-a296ada6ac7cd95905eff689bbde15c7.mesh"
+
+[deps]
+
+files=["res://.godot/imported/HexPillar.obj-a296ada6ac7cd95905eff689bbde15c7.mesh"]
+
+source_file="res://Assets/HexPillar.obj"
+dest_files=["res://.godot/imported/HexPillar.obj-a296ada6ac7cd95905eff689bbde15c7.mesh", "res://.godot/imported/HexPillar.obj-a296ada6ac7cd95905eff689bbde15c7.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(0.25, 0.25, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
