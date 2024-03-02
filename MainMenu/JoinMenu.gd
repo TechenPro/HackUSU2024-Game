@@ -27,7 +27,7 @@ func _Submit_Button_Pressed():
 	
 func _Address_Submitted(str):
 	var address = verify_address(str)
-	if not address:
+	if address == "-1":
 		return
 	var NetworkManager = get_parent().get_node("NetworkManager")
 	NetworkManager.join_game(address)
@@ -36,12 +36,14 @@ func _Address_Submitted(str):
 		get_tree().change_scene_to_file("res://MainMenu/Lobby.tscn")
 		
 func verify_address(str):
+	if str == "":
+		return str
 	var regex = RegEx.new()
 	regex.compile("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$")
 	var result = regex.search(str)
 	if not result:
 		print("Invalid IP Address!", str)
-		return null
+		return -1
 	var blocks = [int(result.get_string(1)),
 		int(result.get_string(2)),
 		int(result.get_string(3)),

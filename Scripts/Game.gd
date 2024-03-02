@@ -21,6 +21,23 @@ func _ready():
 	get_tree().get_root().size_changed.connect(on_resize) 
 
 	add_child(server)
+var client: PlayerWorld
+
+var world_map
+
+func _ready():
+	client = PlayerWorld.new()
+	add_child(client)
+		
+	if multiplayer.is_server():
+		server = ServerWorld.new()
+		add_child(server)
+		
+	load_map.rpc(server.world_map)
+
+@rpc("any_peer", "call_local", "reliable")
+func load_map():
+	print(server.world_map.get_coord_list())
 	for coord in server.world_map.get_coord_list():
 		var x = TILE_SIZE * (sqrt(3)*coord[0] + sqrt(3)/2*coord[1])
 		var y = TILE_SIZE * (1.5 * coord[1])

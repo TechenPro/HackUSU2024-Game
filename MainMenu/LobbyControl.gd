@@ -76,4 +76,4 @@ func set_player_ready_status(player_id, status):
 
 @rpc("authority", "call_local", "reliable")
 func start_game():
-	get_tree().change_scene_to_file("res://world.tscn")
+	get_tree().change_scene_to_file("res://GameScene.tscn")
