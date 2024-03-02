@@ -5,6 +5,7 @@ var visibility_map: Dictionary
 var unit_set: Dictionary
 var base_set: Dictionary
 var main_base_id: int
+var resource_count: int
 
 
 func _init(uid):
@@ -13,5 +14,14 @@ func _init(uid):
 	unit_set = {}
 	base_set = {}
 	
+func can_build():
+	return resource_count >= 5
 
+func build_spend():
+	resource_count -= 5
 
+func can_recruit():
+	return resource_count >= 2
+
+func recruit_spend():
+	resource_count -= 2

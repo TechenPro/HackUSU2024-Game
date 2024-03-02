@@ -6,7 +6,6 @@ var map_coord_set: Array = [[0,0],[0,1],[0,-1],[1,0],[-1,0], [4, 3], [4, 4]]
 @export
 var valid_start_locations: Array = [[[0,0], [0,1]], [[4,3], [4,4]]]
 
-
 # Generates uids for all objects
 static var id_counter = 0
 
@@ -37,11 +36,15 @@ func process_action(action: Action):
 	var result = {}
 	match action.action_type:
 		ServerEnums.ActionType.WAIT:
-			pass
+			result = resolve_wait(action)
 		ServerEnums.ActionType.ATTACK:
 			result = resolve_attack(action)
 		ServerEnums.ActionType.BUILD:
+			result = resolve_build(action)
+		ServerEnums.ActionType.MINE:
 			pass
+		ServerEnums.ActionType.RECRUIT:
+			result = resolve_recruit(action)
 	
 	# Advance Cooldown Queue
 	if not result["success"]:
@@ -86,6 +89,39 @@ func resolve_attack(action: Action):
 				return path
 	return false
 
+func resolve_wait(action: Action):
+	var aid = action.actor_id
+	# Only Unit objects can wait
+	if check_world_obj_type(aid) == ServerEnums.ObjectType.UNIT:
+		# Verify Movement
+		return validate_movement(world_objects[aid].loc, action.final_pos, world_objects[aid].mov_range)
+	return false
+
+func resolve_build(action: Action):
+	var aid = action.actor_id
+	# Only Unit objects can build
+	if check_world_obj_type(aid) == ServerEnums.ObjectType.UNIT:
+		var path =  validate_movement(world_objects[aid].loc, action.final_pos, world_objects[aid].mov_range)
+		if path and validate_spawn_target(action.final_pos, action.target_pos):
+			var pid = world_objects[aid].player_id
+			if player_list[pid].can_build():
+				build_base(pid, action.target_pos)
+				player_list[pid].build_spend()
+				return path
+	return false
+
+func resolve_recruit(action: Action):
+	var aid = action.actor_id
+	# Only Base objects can build
+	if check_world_obj_type(aid) == ServerEnums.ObjectType.BASE:
+		if validate_spawn_target(world_objects[aid].loc, action.target_pos):
+			var pid = world_objects[aid].player_id
+			if player_list[pid].can_recruit():
+				build_unit(pid, action.target_pos)
+				player_list[pid].recruit_spend()
+				return true
+	return false
+
 # Verifies the given object id is valid and returns its obj_type field if it can. Returns false otherwise
 func check_world_obj_type(id):
 	if not world_objects.has(id):
@@ -106,6 +142,12 @@ func validate_movement(start, end, max_range):
 func validate_attack_target(atk_pos, tgt_pos):
 	if world_objects.has(tgt_pos):
 		if tgt_pos in world_map[atk_pos]:
+			return true
+	return false
+
+func validate_spawn_target(builder_pos, tgt_pos):
+	if tgt_pos in world_map[builder_pos]:
+		if not object_location_map.has(tgt_pos):
 			return true
 	return false
 
