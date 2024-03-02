@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://c01q1yly8o2x0"]
+
+[ext_resource type="Script" path="res://action menu/Scripts/Fight.gd" id="1_x4nin"]
+[ext_resource type="Script" path="res://action menu/Scripts/Build.gd" id="2_b8bkl"]
+[ext_resource type="Script" path="res://action menu/Scripts/Wait.gd" id="3_3twfr"]
+
+[sub_resource type="FontFile" id="FontFile_l8uvm"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+
+[sub_resource type="Theme" id="Theme_5jqq3"]
+/fonts/battle = SubResource("FontFile_l8uvm")
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(347, 126)
+scale = Vector2(0.25, 0.25)
+
+[node name="Fight" type="TextureButton" parent="."]
+offset_left = 272.0
+offset_top = -316.0
+offset_right = 615.0
+offset_bottom = -155.0
+scale = Vector2(2.06431, 1.35637)
+theme = SubResource("Theme_5jqq3")
+script = ExtResource("1_x4nin")
+metadata/_edit_use_anchors_ = true
+
+[node name="Build" type="TextureButton" parent="."]
+offset_left = 292.0
+offset_top = 512.0
+offset_right = 635.0
+offset_bottom = 673.0
+scale = Vector2(2.06431, 1.35637)
+theme = SubResource("Theme_5jqq3")
+script = ExtResource("2_b8bkl")
+metadata/_edit_use_anchors_ = true
+
+[node name="Wait" type="TextureButton" parent="."]
+offset_left = 316.0
+offset_top = 1392.0
+offset_right = 659.0
+offset_bottom = 1553.0
+scale = Vector2(2.06431, 1.35637)
+theme = SubResource("Theme_5jqq3")
+script = ExtResource("3_3twfr")
+metadata/_edit_use_anchors_ = true
