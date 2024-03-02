@@ -32,14 +32,17 @@ func get_world_state():
 	if multiplayer.is_server():
 		var new_state = server.get_world_state()
 		print(multiplayer.get_unique_id(), " Sending ", new_state, " to all")
-		world_updated.rpc(new_state)
+		world_updated.rpc(str(new_state))
 
 
-@rpc("authority", "call_remote", "reliable")
-func world_updated(ws:WorldState):
+@rpc("any_peer", "call_remote", "reliable")
+#func world_updated(ws:WorldState):
+func world_updated(ws:String):
 	print(multiplayer.get_unique_id(), " recieved world update: ", ws)
 	if not client.world_map:
-		client.init_world(ws)
+		#client.init_world(ws)
+		pass
 	else:
-		client.world_updated(ws)
+		#client.world_updated(ws)
+		pass
 		
