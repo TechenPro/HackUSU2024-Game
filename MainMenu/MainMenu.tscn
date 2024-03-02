@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://qycuxph27yih"]
+[gd_scene load_steps=3 format=3 uid="uid://qycuxph27yih"]
 
 [ext_resource type="Script" path="res://MainMenu/MenuControl.gd" id="1_4o5yk"]
+[ext_resource type="Script" path="res://Network/Scripts/Networking.gd" id="1_8tsoo"]
 
 [node name="MainMenu" type="Node2D"]
 
@@ -34,3 +35,6 @@ offset_top = 482.0
 offset_right = 671.0
 offset_bottom = 542.0
 text = "Rules"
+
+[node name="NetworkManager" type="Node" parent="."]
+script = ExtResource("1_8tsoo")

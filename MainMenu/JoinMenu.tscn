@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bn6ubvqhgtk26"]
+[gd_scene load_steps=3 format=3 uid="uid://bn6ubvqhgtk26"]
 
 [ext_resource type="Script" path="res://MainMenu/JoinMenu.gd" id="1_hj34j"]
+[ext_resource type="Script" path="res://Network/Scripts/Networking.gd" id="2_qvv3p"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -49,3 +50,6 @@ offset_left = 317.0
 offset_top = 256.0
 offset_right = 840.0
 offset_bottom = 320.0
+
+[node name="NetworkManager" type="Node" parent="."]
+script = ExtResource("2_qvv3p")

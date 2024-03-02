@@ -22,6 +22,8 @@ func _Join_Button_Pressed():
 
 	
 func _Host_Button_Pressed():
+	var NetworkManager = get_parent().get_node("NetworkManager")
+	NetworkManager.create_game()
 	get_tree().change_scene_to_file("res://MainMenu/Lobby.tscn")
 	
 func _Rules_Button_Pressed():

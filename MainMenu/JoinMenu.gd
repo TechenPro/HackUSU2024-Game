@@ -25,8 +25,31 @@ func _Back_Button_Pressed():
 func _Submit_Button_Pressed():
 	_Address_Submitted(AddressInput.text)
 	
-func _Address_Submitted(new_text):
-	print(new_text)
+func _Address_Submitted(str):
+	var address = verify_address(str)
+	if not address:
+		return
+	var NetworkManager = get_parent().get_node("NetworkManager")
+	NetworkManager.join_game(address)
 	
-	if (new_text == "100"):
+	if (address == "100"):
 		get_tree().change_scene_to_file("res://MainMenu/Lobby.tscn")
+		
+func verify_address(str):
+	var regex = RegEx.new()
+	regex.compile("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})$")
+	var result = regex.search(str)
+	if not result:
+		print("Invalid IP Address!", str)
+		return null
+	var blocks = [int(result.get_string(1)),
+		int(result.get_string(2)),
+		int(result.get_string(3)),
+		int(result.get_string(4))]
+		
+	for block in blocks:
+		if block < 0 or block > 255:
+			return null
+	
+	return str
+	
