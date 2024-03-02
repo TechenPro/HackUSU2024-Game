@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://lvj8xt73f0w3"]
+[gd_scene load_steps=6 format=3 uid="uid://cl1e3mux7l5lw"]
 
 [ext_resource type="PackedScene" uid="uid://c81mkk06k4y2a" path="res://Assets/hex_pillar.glb" id="1_dh7s7"]
 [ext_resource type="Script" path="res://Scripts/hex.gd" id="1_i1ftf"]
@@ -17,7 +17,6 @@ tonemap_mode = 2
 glow_enabled = true
 
 [node name="World" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_i1ftf")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]

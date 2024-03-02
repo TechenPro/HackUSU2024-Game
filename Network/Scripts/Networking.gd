@@ -8,7 +8,7 @@ const PORT:int = 7777
 const MAX_CLIENTS:int = 2	
 var SERVER_IP = "127.0.0.1"
 
-var players = {}
+var players = []
 var players_loaded = 0
 
 func _ready():
@@ -24,9 +24,11 @@ func create_game():
 	var error = peer.create_server(PORT, MAX_CLIENTS)
 	if error:
 		return error
-	print("hosting game on port ", PORT)
 	multiplayer.multiplayer_peer = peer
+	self.players.append(multiplayer.get_unique_id())
+	print("hosting game on port ", PORT)
 	print(multiplayer.multiplayer_peer)
+	print(self.players)
 	
 	player_connected.emit(1)
 	
@@ -60,35 +62,37 @@ func player_loaded():
 			print("TODO: Start Game")
 			
 func _on_player_connected(id):
-	_register_player.rpc_id(id)
+	self.players.append(id)
 	print("Player connected: ", id)
-	#for player in players:
-	#	print(player)
+	print(self.players)
+	#_register_player.rpc_id(id)
 	
 @rpc("any_peer", "reliable")
 func _register_player():
 	var new_player_id = multiplayer.get_remote_sender_id()
-	players[new_player_id] = new_player_id
-	player_connected.emit(new_player_id)
-	
+	self.players.append(new_player_id)
 	print("registered player: ", new_player_id)
-		
+	print("All registered players: ", players)
+	player_connected.emit(new_player_id)
 	
 func _on_player_disconnected(id):
 	players.erase(id)
 	player_disconnected.emit(id)
 	print("Player disconnected: ", id)
+	print(players)
 	
 func _on_connected_ok():
 	var peer_id = multiplayer.get_unique_id()
-	players[peer_id] = peer_id
-	player_connected.emit(peer_id)
+	self.players.append(peer_id)
 	print("I connected ok, my id is: ", peer_id)
+	print(players)
+	player_connected.emit(peer_id)
 	get_tree().change_scene_to_file("res://MainMenu/Lobby.tscn")
 	
 func _on_connected_fail():
 	print("You failed to connect")
 	multiplayer.multiplayer_peer = null
+	get_tree().change_scene_to_file("res://MainMenu/MainMenu.tscn")
 	
 func _on_server_disconnected():
 	print("Server disconnected")

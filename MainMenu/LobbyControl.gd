@@ -8,6 +8,9 @@ var PlayerTwoReadyClicked:bool
 var ready_players
 var NetworkController
 
+var PlayerOneReady
+var PlayerTwoReady
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,8 +24,8 @@ func _ready():
 	BackButton = $BackButton
 	BackButton.connect("pressed", _Back_Button_Pressed)
 	
-	var PlayerOneReady = $LobbyBoard/PlayerOneStatus/PlayerOneReady
-	var PlayerTwoReady = $LobbyBoard/PlayerOneStatus/PlayerTwoReady
+	PlayerOneReady = $LobbyBoard/PlayerOneStatus/PlayerOneReady
+	PlayerTwoReady = $LobbyBoard/PlayerTwoStatus/PlayerTwoReady
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -54,26 +57,23 @@ func player_ready(peer_id):
 			ready_players[1] = true
 			
 		print(ready_players)
-		for i in range(0, ready_players.size()-1):
+		for i in range(0, ready_players.size()):
 			set_player_ready_status.rpc(i, ready_players[i])
 		if (ready_players[0] && ready_players [1]):
 			start_game.rpc()
-			print("TODO: Start game")
 
-@rpc("authority", "reliable")
+@rpc("authority", "call_local", "reliable")
 func set_player_ready_status(player_id, status):
 	print("set_player_ready ", player_id, " ", status)
 	var readyText = ""
 	if (status):
 		readyText = "Ready"
 	if (player_id == 0):
-		$LobbyBoard/PlayerOneStatus/PlayerOneReady.text = readyText
+		PlayerOneReady.text = readyText
 	else:
-		$LobbyBoard/PlayerTwoStatus/PlayerTwoReady.text = readyText
+		PlayerTwoReady.text = readyText
 	
 
-@rpc("authority", "reliable")
+@rpc("authority", "call_local", "reliable")
 func start_game():
-	#TODO: Start the game
-	#get_tree().change_scene_to_file()
-	pass
+	get_tree().change_scene_to_file("res://world.tscn")
